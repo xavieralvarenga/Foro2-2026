@@ -36,13 +36,13 @@ public class GestionEquipos {
         for (Equipo e: listaEquipos) {
             if (e instanceof Desktop) {
                 System.out.println("DESKTOP");
-                System.out.println(e);
+                System.out.println(e.toString());
             } else if (e instanceof Laptop) {
                 System.out.println("LAPTOP");
-                System.out.println(e);
+                System.out.println(e.toString());
             } else if (e instanceof Tablet) {
                 System.out.println("TABLET");
-                System.out.println(e);
+                System.out.println(e.toString());
             }
 
             System.out.println("-------------------------");
