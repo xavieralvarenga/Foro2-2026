@@ -20,7 +20,7 @@ public class InterfazUsuario {
                     "MENU PRINCIPAL\n\n" +
                             "1. Registrar equipo\n" +
                             "2. Ver equipos\n" +
-                            "3. Salir"
+                            "3. Salir "
             ));
 
             switch (opcion) {
