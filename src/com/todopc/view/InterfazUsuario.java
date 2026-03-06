@@ -16,6 +16,7 @@ public class InterfazUsuario {
     public void mostrarMenu() {
 
         int opcion;
+        GestionEquipos gestion = new GestionEquipos();
 
         do {
 
@@ -29,12 +30,12 @@ public class InterfazUsuario {
             switch (opcion) {
 
                 case 1:
-                    GestionEquipos gestion = new GestionEquipos();
+
                     gestion.registrarNuevoEquipo();
                     break;
 
                 case 2:
-                    JOptionPane.showMessageDialog(null, "Aquí se mostrarán los equipos");
+                    gestion.listarEquipos();
                     break;
 
                 case 3:

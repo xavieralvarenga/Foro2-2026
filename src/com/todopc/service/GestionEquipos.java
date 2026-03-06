@@ -42,11 +42,6 @@ public class GestionEquipos {
 
         String fabricante = JOptionPane.showInputDialog("Ingrese el Fabricante:");
         String modelo = JOptionPane.showInputDialog("Ingrese el Modelo:");
-        String microprocesador = JOptionPane.showInputDialog("Ingrese el Microprocesador:");
-        String memoria = JOptionPane.showInputDialog("Ingrese el Memoria:");
-        String tarjetagrafica = JOptionPane.showInputDialog("Ingrese el Tarjeta de Grafica:");
-
-        String capacidadDisco = JOptionPane.showInputDialog("Ingrese el Capacidad Grafica:");
 
 
         if(fabricante.isEmpty() || modelo.isEmpty()) {
@@ -54,49 +49,89 @@ public class GestionEquipos {
             return;
         }
 
+        String microprocesador = JOptionPane.showInputDialog("Ingrese el Microprocesador:");
 
         if (tipo == 1) {
+            String memoria = JOptionPane.showInputDialog("Ingrese la Memoria:");
+            String tarjetagrafica = JOptionPane.showInputDialog("Ingrese la Tarjeta Gráfica:");
             String tamanoTorre = JOptionPane.showInputDialog("Ingrese el tamaño de la torre:");
-
-            Desktop nuevaDesktop = new Desktop(fabricante, modelo, microprocesador,memoria,tarjetagrafica,tamanoTorre,capacidadDisco);
-
+            String capacidadDisco = JOptionPane.showInputDialog("Ingrese la Capacidad de Disco:");
+            Desktop nuevaDesktop = new Desktop(fabricante, modelo, microprocesador, memoria, tarjetagrafica, tamanoTorre, capacidadDisco);
             agregarEquipo(nuevaDesktop);
             JOptionPane.showMessageDialog(null, "Desktop registrada exitosamente.");
 
         } else if (tipo == 2) {
-            // Lógica para pedir datos de Laptop e instanciarla
-            // Laptop nuevaLaptop = new Laptop(...);
-            // gestion.agregarEquipo(nuevaLaptop);
+            String memoria = JOptionPane.showInputDialog("Ingrese el Memoria:");
+            String tamanoPantalla = JOptionPane.showInputDialog("Ingrese el tamaño de la pantalla:");
+            String capacidadDisco = JOptionPane.showInputDialog("Ingrese la Capacidad de Disco:");
+
+            Laptop nuevaLaptop = new Laptop(fabricante, modelo, microprocesador, memoria, tamanoPantalla, capacidadDisco);
+            agregarEquipo(nuevaLaptop);
+            JOptionPane.showMessageDialog(null, "Laptop registrada exitosamente.");
 
         } else if (tipo == 3) {
-            // Lógica para pedir datos de Tablet e instanciarla
-            // Tablet nuevaTablet = new Tablet(...);
-            // gestion.agregarEquipo(nuevaTablet);
+            // La tabla no pide Memoria RAM estándar para Tablet, le pasamos "N/A" al constructor padre
+            String memoria = "N/A";
+            String tamanoDiagonal = JOptionPane.showInputDialog("Ingrese el tamaño diagonal de pantalla:");
+            String tipoPantalla = JOptionPane.showInputDialog("¿Es Capacitiva o Resistiva?");
+            String memoriaNAND = JOptionPane.showInputDialog("Ingrese el tamaño de memoria NAND:");
+            String sistemaOperativo = JOptionPane.showInputDialog("Ingrese el Sistema Operativo:");
+
+            Tablet nuevaTablet = new Tablet(fabricante, modelo, microprocesador, memoria, tamanoDiagonal, tipoPantalla, memoriaNAND, sistemaOperativo);
+            agregarEquipo(nuevaTablet);
+            JOptionPane.showMessageDialog(null, "Tablet registrada exitosamente.");
         } else {
             JOptionPane.showMessageDialog(null, "Tipo de equipo inválido.");
         }
     }
 
     // Listar equipos en orden segun su instanceof
+    // Listar equipos según su tipo (Desktop, Laptop o Tablet)
     public void listarEquipos() {
+        // Verificamos si la lista está vacía
         if (listaEquipos.isEmpty()) {
-            System.out.println("No hay equipos registrados");
+            JOptionPane.showMessageDialog(null, "No hay equipos registrados en el sistema actualmente.");
             return;
         }
 
-        for (Equipo e: listaEquipos) {
-            if (e instanceof Desktop) {
-                System.out.println("DESKTOP");
-                System.out.println(e.toString());
-            } else if (e instanceof Laptop) {
-                System.out.println("LAPTOP");
-                System.out.println(e.toString());
-            } else if (e instanceof Tablet) {
-                System.out.println("TABLET");
-                System.out.println(e.toString());
-            }
+        // Preguntamos qué tipo de equipo desea ver (Requisito del PDF)
+        String tipoStr = JOptionPane.showInputDialog(
+                "¿Qué tipo de equipo desea ver?\n" +
+                        "1. Desktops\n" +
+                        "2. Laptops\n" +
+                        "3. Tablets"
+        );
 
-            System.out.println("-------------------------");
+        if (tipoStr == null) return; // Si el usuario presiona "Cancelar"
+        int tipo = Integer.parseInt(tipoStr);
+
+        // Variable para acumular el texto que mostraremos
+        String listado = "";
+        boolean encontrados = false; // Bandera para saber si encontramos al menos uno
+
+        // Recorremos el ArrayList y filtramos con instanceof
+        for (Equipo equipo : listaEquipos) {
+
+            if (tipo == 1 && equipo instanceof Desktop) {
+                listado += "=== DESKTOP ===\n" + equipo.toString() + "\n\n";
+                encontrados = true;
+
+            } else if (tipo == 2 && equipo instanceof Laptop) {
+                listado += "=== LAPTOP ===\n" + equipo.toString() + "\n\n";
+                encontrados = true;
+
+            } else if (tipo == 3 && equipo instanceof Tablet) {
+                listado += "=== TABLET ===\n" + equipo.toString() + "\n\n";
+                encontrados = true;
+            }
+        }
+
+        // Apartado de mensaje de equipos no encontrados
+        if (!encontrados) {
+            JOptionPane.showMessageDialog(null, "No se encontraron equipos registrados de esta categoría.");
+        } else {
+            // Mostramos los equipos
+            JOptionPane.showMessageDialog(null, listado, "Listado de Equipos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
