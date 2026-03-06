@@ -1,10 +1,13 @@
 package com.todopc.view;
+import com.todopc.service.GestionEquipos;
 
 /**
  * Esta clase se encargará de la interacción con el usuario, mostrando menús, solicitando datos y mostrando resultados.
  * Lógica de presentación: Aquí se implementará el método para mostrar el menú principal para solicitar y mostrar los datos de los equipos.
  * */
 
+
+import com.todopc.service.GestionEquipos;
 
 import javax.swing.JOptionPane;
 
@@ -26,7 +29,8 @@ public class InterfazUsuario {
             switch (opcion) {
 
                 case 1:
-                    registrarEquipo();
+                    GestionEquipos gestion = new GestionEquipos();
+                    gestion.registrarNuevoEquipo();
                     break;
 
                 case 2:
