@@ -9,10 +9,11 @@ import com.todopc.view.InterfazUsuario;
  */
 public class Main {
     public static void main(String[] args) {
-
+        // Crear instancia de la interfaz de usuario
         InterfazUsuario interfaz = new InterfazUsuario();
-        interfaz.mostrarMenu();
 
+        // Iniciar la aplicación mostrando el menú principal
+        interfaz.mostrarMenu();
     }
 
 }
